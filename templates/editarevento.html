@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+{% block title %}Editar Evento{% endblock %}
+{% block content %}
+  <div class="max-w-6xl mx-auto p-6">
+    <form method="POST" enctype="multipart/form-data" class="bg-white p-6 rounded-lg shadow-md">
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+        <div>
+          <label for="titulo">Título</label>
+          <input type="text" name="titulo" id="titulo" required class="border rounded px-3 py-2 w-full" value="{{ evento.titulo }}">
+        </div>
+        <div>
+          <label for="descricao">Descrição</label>
+          <textarea name="descricao" id="descricao" rows="4" class="border rounded px-3 py-2 w-full">{{ evento.descricao }}</textarea>
+        </div>
+        <div>
+          <label for="data">Data</label>
+          <input type="date" name="data" id="data" class="border rounded px-3 py-2 w-full" value="{{ evento.data }}">
+        </div>
+        <div>
+          <label for="horario">Horário</label>
+          <input type="time" name="horario" id="horario" class="border rounded px-3 py-2 w-full" value="{{ evento.horario }}">
+        </div>
+        <div>
+          <label for="endereco">Endereço</label>
+          <input type="text" name="endereco" id="endereco" class="border rounded px-3 py-2 w-full" value="{{ evento.endereco }}">
+        </div>
+        <div>
+          <label for="cidade">Cidade</label>
+          <select name="cidade" id="cidade" class="border rounded px-3 py-2 w-full">
+            <option value="">Selecione</option>
+            {% for c in cidades %}
+              <option value="{{ c.cidade }}" {% if evento.cidade == c.cidade %}selected{% endif %}>{{ c.cidade }}</option>
+            {% endfor %}
+          </select>
+        </div>
+        <div class="sm:col-span-2">
+          <label for="imagem">Imagem</label>
+          <input type="file" name="imagem" id="imagem" class="w-full">
+          {% if evento.imagem %}
+            <p class="text-xs text-gray-600 mt-1">Imagem atual: <img src="/{{ evento.imagem }}" class="inline-block h-12" alt="imagem atual"></p>
+          {% endif %}
+        </div>
+      </div>
+      <div class="mt-6 text-center">
+        <button type="submit" class="bg-indigo-600 text-white px-6 py-2 rounded">Atualizar Evento</button>
+      </div>
+    </form>
+  </div>
+{% endblock %}

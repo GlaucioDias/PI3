@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="pt-br">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% block title %}Baixada em Cena{% endblock %}</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body class="bg-gray-50 min-h-screen">
+<header class="bg-[#4C32CC] text-white p-4 w-full shadow-md">
+  <div class="max-w-7xl mx-auto flex justify-between items-center">
+    <div>
+      <a href="{{ url_for('index') }}" class="text-3xl font-semibold text-black">
+🎭 <span class="ml-1">Baixada em Cena</span>
+</a>
+    </div>
+      <form method="GET" action="{{ url_for('index') }}" class="flex items-center bg-white rounded-full shadow px-3 py-1 w-96"> <input 
+    type="text" 
+    name="query" 
+    placeholder="Pesquisar eventos, artistas, locais..." 
+    value="{{ query if query is defined else '' }}"
+    class="flex-grow px-3 py-2 outline-none text-gray-700 rounded-full"
+  />
+
+  <button 
+    type="submit" 
+    class="bg-indigo-600 text-white px-4 py-2 rounded-full hover:bg-indigo-700 transition">
+    Buscar
+  </button>
+
+</form>
+    <div class="flex items-center space-x-3" role="navigation" aria-label="Menu principal">
+      
+      {% if session.get('logado') %}
+        <span class="text-white text-sm">Bem-vindo, {{ session.get('usuario_nome') }}</span>
+        <a href="{{ url_for('criar_eventos') }}" class="bg-indigo-600 text-white px-3 py-1 text-sm rounded-md shadow hover:bg-indigo-700 transition focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-orange-500">Criar Evento</a>
+        <a href="{{ url_for('gerenciar_eventos') }}" class="bg-indigo-600 text-white px-3 py-1 text-sm rounded-md shadow hover:bg-indigo-700 transition focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-orange-500">Gerenciar</a>
+        <a href="{{ url_for('logout') }}" class="bg-red-100 text-red-600 px-3 py-1 text-sm rounded-md shadow hover:bg-red-200 transition focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-orange-500">Sair</a>
+      {% else %}
+        <a href="{{ url_for('login') }}" class="bg-indigo-600 text-white px-3 py-1 text-sm rounded-md shadow hover:bg-indigo-700 transition focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-orange-500">Login</a>
+      {% endif %}
+    </div>
+  </div>
+</header>
+<main id="main-content" role="main" tabindex="-1" class="p-6">
+  {% block content %}{% endblock %}
+</main>
+
+<footer role="contentinfo" class="bg-gray-800 text-white text-center p-4 mt-10">
+  <div class="flex justify-center items-center space-x-4">
+
+    <span>
+      &copy; {{ current_year if current_year is defined else 2026 }} Projeto Integrador - UNIVESP. Todos os direitos reservados.
+    </span>
+
+    <a href="{{ url_for('integrantes') }}"
+       class=" text-white px-3 py-1 text-sm transition">
+       Sobre Nós
+    </a>
+
+  </div>
+</footer>
+</body>
+</html>

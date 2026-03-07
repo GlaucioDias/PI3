@@ -1,0 +1,92 @@
+{% extends 'base.html' %}
+{% block title %}Eventos{% endblock %}
+{% block content %}
+<div class="max-w-6xl mx-auto space-y-8">
+  <form method="GET" action="{{ url_for('index') }}" class="flex flex-wrap gap-2 mb-4">
+    <input type="text" name="cidade" placeholder="Cidade" value="{{ cidade }}" class="border rounded px-2 py-1" />
+    <input type="date" name="data_inicio" value="{{ data_inicio }}" class="border rounded px-2 py-1" />
+    <input type="date" name="data_fim" value="{{ data_fim }}" class="border rounded px-2 py-1" />
+    <button type="submit" class="bg-indigo-600 text-white px-4 py-1 rounded">Filtrar</button>
+  </form>
+
+  {% if eventos_carrossel is defined and eventos_carrossel %}
+  <div class="relative bg-gradient-to-r from-indigo-500 to-purple-600 rounded-lg overflow-hidden shadow-lg p-8">
+    <div class="relative">
+      <div class="overflow-hidden">
+        <div id="carouselSlides" class="flex" style="transition: transform 0.5s ease-in-out;">
+          {% for ev in eventos_carrossel %}
+            <div style="min-width: 100%; display: flex; gap: 2rem; align-items: center;">
+              {% if ev.imagem %}
+                <img src="/uploads/{{ ev.imagem }}" alt="{{ ev.titulo }}" style="width: 250px; height: 250px; object-fit: cover; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.3);">
+              {% endif %}
+              <div style="color: white; flex: 1;">
+                <h3 style="font-size: 28px; font-weight: bold; margin-bottom: 12px;">{{ ev.titulo }}</h3>
+                <p style="margin-bottom: 8px;">📍 {{ ev.cidade }}</p>
+                <p style="margin-bottom: 16px;">📅 {{ ev.data }} às {{ ev.horario }}</p>
+                <p style="margin-bottom: 16px; max-height: 60px; overflow: hidden;">{{ ev.descricao }}</p>
+                <a href="{{ url_for('evento', evento_id=ev.id) }}" style="display: inline-block; background-color: white; color: #4f46e5; padding: 10px 24px; border-radius: 6px; font-weight: bold; text-decoration: none;">
+                  Ver Detalhes
+                </a>
+              </div>
+            </div>
+          {% endfor %}
+        </div>
+      </div>
+
+      <button onclick="slideCarousel(-1)" style="position: absolute; left: 16px; top: 50%; transform: translateY(-50%); background: white; border: none; width: 50px; height: 50px; border-radius: 50%; cursor: pointer; font-size: 28px; font-weight: bold; box-shadow: 0 4px 6px rgba(0,0,0,0.2); z-index: 10;">‹</button>
+      <button onclick="slideCarousel(1)" style="position: absolute; right: 16px; top: 50%; transform: translateY(-50%); background: white; border: none; width: 50px; height: 50px; border-radius: 50%; cursor: pointer; font-size: 28px; font-weight: bold; box-shadow: 0 4px 6px rgba(0,0,0,0.2); z-index: 10;">›</button>
+    </div>
+  </div>
+
+  <div class="mt-12">
+    <h2 class="text-2xl font-bold text-gray-800 mb-6 border-b-2 border-indigo-500 inline-block">Explorar Eventos</h2>
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      {% for ev in eventos %}
+        <div class="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-xl transition-shadow duration-300 border border-gray-100">
+          <div class="h-48 overflow-hidden">
+            {% if ev.imagem %}
+              <img src="/uploads/{{ ev.imagem }}" class="w-full h-full object-cover">
+            {% else %}
+              <div class="w-full h-full bg-indigo-100 flex items-center justify-center text-indigo-300">🎭</div>
+            {% endif %}
+          </div>
+          <div class="p-5">
+            <h3 class="text-xl font-bold text-gray-900 mb-2 truncate">{{ ev.titulo }}</h3>
+            <p class="text-sm text-gray-600 mb-1">📍 {{ ev.cidade }}</p>
+            <p class="text-sm text-gray-600 mb-4">📅 {{ ev.data }}</p>
+            <a href="{{ url_for('evento', evento_id=ev.id) }}" class="block text-center bg-indigo-50 text-indigo-600 font-bold py-2 rounded-lg hover:bg-indigo-600 hover:text-white transition-colors">Ver Detalhes</a>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+
+  {% else %}
+    <p class="text-center py-10 text-gray-500">Nenhum evento encontrado.</p>
+  {% endif %}
+</div>
+
+<div id="carousel"
+     data-total-slides="{{ eventos_carrossel | default([]) | length }}">
+</div>
+
+<script>
+let carouselIndex = 0;
+
+const carouselEl = document.getElementById('carousel');
+const totalSlides = Number(carouselEl?.dataset?.totalSlides || 0);
+
+function updateCarousel() {
+    if (totalSlides === 0) return;
+    const slides = document.getElementById('carouselSlides');
+    if (!slides) return;
+    slides.style.transform = `translateX(-${carouselIndex * 100}%)`;
+}
+
+function slideCarousel(n) {
+    if (totalSlides === 0) return;
+    carouselIndex = (carouselIndex + n + totalSlides) % totalSlides;
+    updateCarousel();
+}
+</script>
+{% endblock %}

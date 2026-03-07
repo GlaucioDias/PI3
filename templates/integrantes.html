@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+{% block title %}Integrantes{% endblock %}
+{% block content %}
+<!-- Sections similar to original PHP page -->
+<section id="sobre" class="bg-white py-16 px-6">
+  <div class="max-w-4xl mx-auto text-center">
+    <h2 class="text-2xl font-semibold text-blue-700 mb-5">Sobre o Projeto</h2>
+    <div class="text-sm text-gray-700 leading-relaxed text-left">
+      <p class="mb-3"><strong class="text-blue-700">🎓 Título do Trabalho:</strong> <em>Baixada em Cena: Mapeamento e Promoção de Eventos Culturais na Baixada Santista + inclusiva</em></p>
+      <p class="mb-3"><strong class="text-blue-700">👨‍🏫 Orientador do PI:</strong> Matheus Sanches de Sá Bergamo </p>
+      <p class="mb-3"><strong class="text-blue-700">🎯 Objetivo Geral:</strong> Mapear e promover eventos culturais na Baixada Santista de maneira acessível.</p>
+      <p><strong class="text-blue-700">📌 Objetivos Específicos:</strong></p>
+      <ul class="list-disc list-inside ml-4 text-gray-600 mt-2">
+        <li>Identificar os principais desafios de acesso para pessoas com deficiência;</li>
+        <li>Desenvolver uma plataforma digital responsiva e acessível para centralizar informações sobre eventos culturais;</li>
+        <li>Promover a participação da comunidade em atividades culturais.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section id="integrantes" class="bg-gray-100 py-16 px-6">
+  <div class="max-w-7xl mx-auto">
+    <h2 class="text-xl font-semibold text-center text-blue-700 mb-8">👥 Integrantes do Projeto</h2>
+    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+      {% for integrante in integrantes %}
+        <div class="bg-white rounded-xl shadow hover:shadow-md transition-transform transform hover:-translate-y-1 p-4 text-center">
+          <img src="/static/uploads/integrante{{ loop.index }}.jpg" alt="{{ integrante.nome }}" class="w-28 h-36 object-cover mx-auto mb-3 rounded-lg border border-gray-300 shadow-sm" />
+          <p class="font-medium text-gray-900 text-sm">{{ integrante.nome }}</p>
+          <p class="text-xs text-gray-500 mb-1">RA: {{ integrante.ra }}</p>
+          <p class="text-xs text-gray-700 italic">{{ integrante.descricao }}</p>
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<section id="contato" class="bg-white py-16 px-6">
+  <div class="max-w-2xl mx-auto text-center">
+    <h2 class="text-xl font-semibold text-blue-700 mb-4">📬 Contato</h2>
+    <p class="text-sm text-gray-700 mb-3">Entre em contato conosco para dúvidas, sugestões ou parcerias:</p>
+    <p class="text-blue-600 font-semibold text-base">projetointegrador@email.com</p>
+  </div>
+</section>
+
+<footer class="bg-gray-200 text-center text-xs text-gray-600 py-3">
+  &copy; {{ current_year if current_year is defined else 2026 }} Baixada em Cena — Todos os direitos reservados.
+</footer>
+{% endblock %}

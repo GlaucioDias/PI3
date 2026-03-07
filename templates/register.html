@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+{% block title %}Registrar{% endblock %}
+{% block content %}
+  <div class="max-w-md mx-auto mt-12 bg-white p-8 rounded-lg shadow-md">
+    <h2 class="text-2xl font-bold text-center text-indigo-600 mb-6">Cadastro de Usuário</h2>
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+        {% for category, msg in messages %}
+          <div class="text-{{ 'red' if category=='error' else 'green' }}-600 mb-4">{{ msg }}</div>
+        {% endfor %}
+      {% endif %}
+    {% endwith %}
+    <form method="POST">
+      <div>
+        <label for="usuario">Usuário</label>
+        <input type="text" name="usuario" id="usuario" required class="mt-1 block w-full px-4 py-2 border rounded">
+      </div>
+      <div class="mt-4">
+        <label for="senha">Senha</label>
+        <input type="password" name="senha" id="senha" required class="mt-1 block w-full px-4 py-2 border rounded">
+      </div>
+      <div class="mt-4">
+        <label for="usuario_tipo">Tipo de usuário</label>
+        <select name="usuario_tipo" id="usuario_tipo" class="mt-1 block w-full px-4 py-2 border rounded">
+          <option value="usuario">Usuário</option>
+          <option value="admin">Administrador</option>
+        </select>
+      </div>
+      <div class="mt-6 text-center">
+        <button type="submit" class="bg-indigo-600 text-white px-6 py-2 rounded">Cadastrar</button>
+      </div>
+    </form>
+  </div>
+{% endblock %}
+
