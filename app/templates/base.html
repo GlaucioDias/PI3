@@ -5,17 +5,16 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>{% block title %}Baixada em Cena{% endblock %}</title>
   <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
-  <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
 </head>
 <body class="bg-gray-50 min-h-screen">
 <header class="bg-[#4C32CC] text-white p-4 w-full shadow-md">
   <div class="max-w-7xl mx-auto flex justify-between items-center">
     <div>
-      <a href="{{ url_for('index') }}" class="text-3xl font-semibold text-black">
+      <a href="{{ url_for('main.index') }}" class="text-3xl font-semibold text-black">
 🎭 <span class="ml-1">Baixada em Cena</span>
 </a>
     </div>
-      <form method="GET" action="{{ url_for('index') }}" class="flex items-center bg-white rounded-full shadow px-3 py-1 w-96"> <input 
+      <form method="GET" action="{{ url_for('main.index') }}" class="flex items-center bg-white rounded-full shadow px-3 py-1 w-96"> <input 
     type="text" 
     name="query" 
     placeholder="Pesquisar eventos, artistas, locais..." 
@@ -34,11 +33,11 @@
       
       {% if session.get('logado') %}
         <span class="text-white text-sm">Bem-vindo, {{ session.get('usuario_nome') }}</span>
-        <a href="{{ url_for('criar_eventos') }}" class="bg-indigo-600 text-white px-3 py-1 text-sm rounded-md shadow hover:bg-indigo-700 transition focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-orange-500">Criar Evento</a>
-        <a href="{{ url_for('gerenciar_eventos') }}" class="bg-indigo-600 text-white px-3 py-1 text-sm rounded-md shadow hover:bg-indigo-700 transition focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-orange-500">Gerenciar</a>
-        <a href="{{ url_for('logout') }}" class="bg-red-100 text-red-600 px-3 py-1 text-sm rounded-md shadow hover:bg-red-200 transition focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-orange-500">Sair</a>
+        <a href="{{ url_for('evento.criar_eventos') }}" class="bg-indigo-600 text-white px-3 py-1 text-sm rounded-md shadow hover:bg-indigo-700 transition focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-orange-500">Criar Evento</a>
+        <a href="{{ url_for('main.gerenciar_eventos') }}" class="bg-indigo-600 text-white px-3 py-1 text-sm rounded-md shadow hover:bg-indigo-700 transition focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-orange-500">Gerenciar</a>
+        <a href="{{ url_for('auth.logout') }}" class="bg-red-100 text-red-600 px-3 py-1 text-sm rounded-md shadow hover:bg-red-200 transition focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-orange-500">Sair</a>
       {% else %}
-        <a href="{{ url_for('login') }}" class="bg-indigo-600 text-white px-3 py-1 text-sm rounded-md shadow hover:bg-indigo-700 transition focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-orange-500">Login</a>
+        <a href="{{ url_for('auth.login') }}" class="bg-indigo-600 text-white px-3 py-1 text-sm rounded-md shadow hover:bg-indigo-700 transition focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-orange-500">Login</a>
       {% endif %}
     </div>
   </div>
@@ -54,7 +53,7 @@
       &copy; {{ current_year if current_year is defined else 2026 }} Projeto Integrador - UNIVESP. Todos os direitos reservados.
     </span>
 
-    <a href="{{ url_for('integrantes') }}"
+    <a href="{{ url_for('main.integrantes') }}"
        class=" text-white px-3 py-1 text-sm transition">
        Sobre Nós
     </a>

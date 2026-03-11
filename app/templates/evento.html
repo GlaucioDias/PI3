@@ -27,15 +27,15 @@
     </p>
 
     <div class="mt-6 flex gap-3">
-      <a href="{{ url_for('index') }}" class="bg-indigo-600 text-white px-4 py-2 rounded">
+      <a href="{{ url_for('main.index') }}" class="bg-indigo-600 text-white px-4 py-2 rounded">
         Voltar
       </a>
 
       {% if session.get('logado') and session.get('usuario_id') == evento.usuario_id %}
-        <a href="{{ url_for('editar_evento', evento_id=evento.id) }}" class="bg-yellow-500 text-white px-4 py-2 rounded">
+        <a href="{{ url_for('evento.editar_evento', evento_id=evento.id) }}" class="bg-yellow-500 text-white px-4 py-2 rounded">
           Editar
         </a>
-        <a href="{{ url_for('excluir_evento', evento_id=evento.id) }}"
+        <a href="{{ url_for('evento.excluir_evento', evento_id=evento.id) }}"
            onclick="return confirm('Deseja excluir este evento?')"
            class="bg-red-600 text-white px-4 py-2 rounded">
           Excluir

@@ -29,7 +29,7 @@
           <select name="cidade" id="cidade" required class="border rounded px-3 py-2 w-full">
             <option value="">Selecione</option>
             {% for c in cidades %}
-              <option value="{{ c.nome }}">{{ c.nome }}</option>
+              <option value="{{ c.id }}">{{ c.nome }}</option>
             {% endfor %}
           </select>
         </div>
