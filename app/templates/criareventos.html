@@ -6,27 +6,27 @@
       <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
         <div>
           <label for="titulo">Título</label>
-          <input type="text" name="titulo" id="titulo" required class="border rounded px-3 py-2 w-full">
+          <input type="text" name="titulo" id="titulo" required class="border rounded px-3 py-2 w-full focus:border-orange-500 focus:ring-orange-500">
         </div>
         <div>
           <label for="descricao">Descrição</label>
-          <textarea name="descricao" id="descricao" rows="4" required class="border rounded px-3 py-2 w-full"></textarea>
+          <textarea name="descricao" id="descricao" rows="4" required class="border rounded px-3 py-2 w-full focus:border-orange-500 focus:ring-orange-500"></textarea>
         </div>
         <div>
           <label for="data">Data</label>
-          <input type="date" name="data" id="data" required class="border rounded px-3 py-2 w-full">
+          <input type="date" name="data" id="data" required class="border rounded px-3 py-2 w-full focus:border-orange-500 focus:ring-orange-500">
         </div>
         <div>
           <label for="horario">Horário</label>
-          <input type="time" name="horario" id="horario" required class="border rounded px-3 py-2 w-full">
+          <input type="time" name="horario" id="horario" required class="border rounded px-3 py-2 w-full focus:border-orange-500 focus:ring-orange-500">
         </div>
         <div>
           <label for="endereco">Endereço</label>
-          <input type="text" name="endereco" id="endereco" required class="border rounded px-3 py-2 w-full">
+          <input type="text" name="endereco" id="endereco" required class="border rounded px-3 py-2 w-full focus:border-orange-500 focus:ring-orange-500">
         </div>
         <div>
           <label for="cidade">Cidade</label>
-          <select name="cidade" id="cidade" required class="border rounded px-3 py-2 w-full">
+          <select name="cidade" id="cidade" required class="border rounded px-3 py-2 w-full focus:border-orange-500 focus:ring-orange-500">
             <option value="">Selecione</option>
             {% for c in cidades %}
               <option value="{{ c.id }}">{{ c.nome }}</option>
@@ -40,7 +40,7 @@
         </div>
       </div>
       <div class="mt-6 text-center">
-        <button type="submit" class="bg-indigo-600 text-white px-6 py-2 rounded hover:bg-indigo-700 transition">
+        <button type="submit" class="bg-indigo-600 text-white px-6 py-2 rounded hover:bg-indigo-700 transition focus:outline-none focus:ring-2 focus:ring-orange-500">
           Criar Evento
         </button>
       </div>

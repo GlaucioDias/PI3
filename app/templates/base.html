@@ -24,7 +24,7 @@
 
   <button 
     type="submit" 
-    class="bg-indigo-600 text-white px-4 py-2 rounded-full hover:bg-indigo-700 transition">
+    class="bg-indigo-600 text-white px-4 py-2 rounded-full hover:bg-indigo-700 transition focus:outline-none focus:ring-2 focus:ring-orange-500">
     Buscar
   </button>
 
@@ -35,6 +35,9 @@
         <span class="text-white text-sm">Bem-vindo, {{ session.get('usuario_nome') }}</span>
         <a href="{{ url_for('evento.criar_eventos') }}" class="bg-indigo-600 text-white px-3 py-1 text-sm rounded-md shadow hover:bg-indigo-700 transition focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-orange-500">Criar Evento</a>
         <a href="{{ url_for('main.gerenciar_eventos') }}" class="bg-indigo-600 text-white px-3 py-1 text-sm rounded-md shadow hover:bg-indigo-700 transition focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-orange-500">Gerenciar</a>
+        {% if session.get('usuario_tipo') == 'admin' %}
+          <a href="{{ url_for('admin.painel_admin') }}" class="bg-red-600 text-white px-3 py-1 text-sm rounded-md shadow hover:bg-red-700 transition focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-orange-500">Painel Admin</a>
+        {% endif %}
         <a href="{{ url_for('auth.logout') }}" class="bg-red-100 text-red-600 px-3 py-1 text-sm rounded-md shadow hover:bg-red-200 transition focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-orange-500">Sair</a>
       {% else %}
         <a href="{{ url_for('auth.login') }}" class="bg-indigo-600 text-white px-3 py-1 text-sm rounded-md shadow hover:bg-indigo-700 transition focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-orange-500">Login</a>

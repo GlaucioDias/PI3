@@ -7,8 +7,8 @@
         <h1 class="text-3xl font-extrabold">Gerenciar Meus Eventos</h1>
       </div>
       <div class="flex items-center space-x-4">
-        <a href="{{ url_for('criar_eventos') }}" class="bg-white text-indigo-600 px-4 py-2 rounded-lg shadow-md hover:bg-indigo-100 transition-all">+ Criar Novo Evento</a>
-        <a href="{{ url_for('logout') }}" class="bg-red-500 text-white px-4 py-2 rounded-lg shadow-md hover:bg-red-600 transition-all">Sair</a>
+        <a href="{{ url_for('evento.criar_eventos') }}" class="bg-white text-indigo-600 px-4 py-2 rounded-lg shadow-md hover:bg-indigo-100 transition-all">+ Criar Novo Evento</a>
+        <a href="{{ url_for('auth.logout') }}" class="bg-red-500 text-white px-4 py-2 rounded-lg shadow-md hover:bg-red-600 transition-all focus:outline-none focus:ring-2 focus:ring-orange-500">Sair</a>
       </div>
     </div>
   </header>
@@ -22,24 +22,24 @@
         <div>
           <h2 class="text-lg font-semibold text-gray-800">{{ evento.titulo }}</h2>
           <p class="text-sm text-gray-600">
-            {{ evento.data }}{% if evento.horario %} às {{ evento.horario }}{% endif %} em {{ evento.cidade }}
+            {{ evento.data|br_datetime(evento.horario) }} em {{ evento.cidade }}
           </p>
         </div>
         <div class="flex space-x-2">
-          <a href="{{ url_for('editar_evento', evento_id=evento.id) }}" class="bg-yellow-500 text-white px-4 py-2 rounded-lg hover:bg-yellow-600 transition-all">Editar</a>
-          <a href="{{ url_for('excluir_evento', evento_id=evento.id) }}" onclick="return confirm('Tem certeza que deseja excluir este evento?');" class="bg-red-600 text-white px-4 py-2 rounded-lg hover:bg-red-700 transition-all">Excluir</a>
+          <a href="{{ url_for('evento.editar_evento', evento_id=evento.id) }}" class="bg-yellow-500 text-white px-4 py-2 rounded-lg hover:bg-yellow-600 transition-all focus:outline-none focus:ring-2 focus:ring-orange-500">Editar</a>
+          <a href="{{ url_for('evento.excluir_evento', evento_id=evento.id) }}" onclick="return confirm('Tem certeza que deseja excluir este evento?');" class="bg-red-600 text-white px-4 py-2 rounded-lg hover:bg-red-700 transition-all focus:outline-none focus:ring-2 focus:ring-orange-500">Excluir</a>
         </div>
       </div>
       {% endfor %}
     {% else %}
       <div class="bg-white p-6 rounded-lg shadow text-center">
         <p class="text-lg text-gray-700 font-medium mb-4">Você ainda não criou nenhum evento.</p>
-        <a href="{{ url_for('criar_eventos') }}" class="inline-block bg-indigo-600 text-white px-6 py-2 rounded-lg shadow-md hover:bg-indigo-700 transition-all">+ Criar Meu Primeiro Evento</a>
+        <a href="{{ url_for('evento.criar_eventos') }}" class="inline-block bg-indigo-600 text-white px-6 py-2 rounded-lg shadow-md hover:bg-indigo-700 transition-all focus:outline-none focus:ring-2 focus:ring-orange-500">+ Criar Meu Primeiro Evento</a>
       </div>
     {% endif %}
   </div>
 
   <div class="max-w-6xl mx-auto p-6 mt-6 text-center">
-    <a href="{{ url_for('index') }}" class="bg-indigo-600 text-white px-6 py-2 rounded-lg shadow-md hover:bg-indigo-700 transition-all">Voltar para a Página Inicial</a>
+    <a href="{{ url_for('main.index') }}" class="bg-indigo-600 text-white px-6 py-2 rounded-lg shadow-md hover:bg-indigo-700 transition-all focus:outline-none focus:ring-2 focus:ring-orange-500">Voltar para a Página Inicial</a>
   </div>
 {% endblock %}

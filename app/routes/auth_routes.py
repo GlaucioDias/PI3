@@ -8,18 +8,26 @@ auth = Blueprint("auth", __name__)
 @auth.route("/login", methods=["GET", "POST"])
 def login():
     if request.method == "POST":
-        email = request.form.get("email")
-        senha = request.form.get("senha")
+        email = request.form.get("email", "").strip().lower()
+        senha = request.form.get("senha", "").strip()
 
         usuario = UsuarioService.buscar_usuario_por_email(email)
-        
+
+        # debug temporário
+        print(f"Login tentado: email={email} senha_recebida={'*' * len(senha)} usuario_encontrado={bool(usuario)}")
+        if usuario:
+            print(f"senha_db={usuario['senha']}")
+
         if usuario and validarSenha(senha, usuario):
             session["logado"] = True
             session["usuario_email"] = email
+            session["usuario_id"] = usuario["id"]
+            session["usuario_nome"] = usuario["nome"]
+            session["usuario_tipo"] = usuario.get("tipo", "usuario")
             flash("Login realizado!")
             return redirect(url_for("main.index"))
         else:
-            flash("Usuário ou senha inválidos")
+            flash("Usuário ou senha inválidos", "error")
 
     return render_template("login.html")
 
@@ -36,8 +44,9 @@ def register():
     if request.method == "POST":
         print("Dados do formulário:", request.form)
         nome = request.form.get("nome")
-        email = request.form.get("email", "").strip()
-        senha = request.form.get("senha")
+        email = request.form.get("email", "").strip().lower()
+        senha = request.form.get("senha", "").strip()
+        tipo = 'usuario'  # registro público sempre como usuário
 
         if not senha:
             flash("Senha é obrigatória")
@@ -45,10 +54,9 @@ def register():
 
         senha_hash = generate_password_hash(senha)
 
-        UsuarioService.criar_usuario(nome, email, senha_hash)
         
         try:
-            UsuarioService.criar_usuario(nome, email, senha_hash)
+            UsuarioService.criar_usuario(nome, email, senha_hash, tipo)
 
             flash("Cadastro realizado com sucesso!", "success")
             return redirect(url_for("auth.login"))

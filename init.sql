@@ -1,8 +1,8 @@
 -- Criação do banco de dados pi3
+drop database if exists pi3;
+-- Criação do banco
+CREATE DATABASE IF NOT EXISTS pi3;
 USE pi3;
-
-ALTER USER 'flask'@'%' IDENTIFIED WITH mysql_native_password BY 'flask123';
-FLUSH PRIVILEGES;
 
 -- Tabela de cidades
 CREATE TABLE IF NOT EXISTS cidades (
@@ -17,6 +17,7 @@ CREATE TABLE IF NOT EXISTS usuarios (
   nome VARCHAR(100) NOT NULL,
   email VARCHAR(100) NOT NULL UNIQUE,
   senha VARCHAR(255) NOT NULL,
+  tipo ENUM('usuario','admin') NOT NULL DEFAULT 'usuario',
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
   updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -38,6 +39,9 @@ CREATE TABLE IF NOT EXISTS eventos (
   FOREIGN KEY (usuario_id) REFERENCES usuarios(id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+-- Garante que, se o campo for DATETIME em instâncias antigas, seja convertido para DATE
+ALTER TABLE eventos MODIFY COLUMN data DATE;
+
 -- Inserir cidades padrão
 INSERT INTO cidades (nome) VALUES 
 ('São Paulo'),
@@ -49,5 +53,14 @@ INSERT INTO cidades (nome) VALUES
 ('Manaus'),
 ('Recife'),
 ('Curitiba'),
-('Porto Alegre')
+('Porto Alegre'),
+('Bertioga'),
+('Cubatão'),
+('Guarujá'),
+('Itanhaém'),
+('Mongaguá'),
+('Peruíbe'),
+('Praia Grande'),
+('Santos'),
+('São Vicente')
 ON DUPLICATE KEY UPDATE nome=VALUES(nome);

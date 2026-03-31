@@ -5,7 +5,7 @@
 <article class="max-w-4xl mx-auto">
 
  {% if evento.imagem %}
-  <img src="{{ url_for('uploaded_file', filename=evento.imagem) }}" 
+  <img src="{{ url_for('main.uploaded_file', filename=evento.imagem) }}" 
        alt="{{ evento.titulo }}" 
        class="w-full h-64 object-cover rounded-lg">
 {% else %}
@@ -17,7 +17,7 @@
   <div class="p-6">
     <p class="text-sm text-gray-600 mb-2">
       {% if evento.cidade %}{{ evento.cidade }} - {% endif %}
-      {{ evento.data }} {% if evento.horario %}às {{ evento.horario }}{% endif %}
+      {{ evento.data|br_datetime(evento.horario) }}
     </p>
 
     <h1 class="text-2xl font-bold mb-4">{{ evento.titulo }}</h1>
@@ -27,17 +27,17 @@
     </p>
 
     <div class="mt-6 flex gap-3">
-      <a href="{{ url_for('main.index') }}" class="bg-indigo-600 text-white px-4 py-2 rounded">
+      <a href="{{ url_for('main.index') }}" class="bg-indigo-600 text-white px-4 py-2 rounded focus:outline-none focus:ring-2 focus:ring-orange-500">
         Voltar
       </a>
 
       {% if session.get('logado') and session.get('usuario_id') == evento.usuario_id %}
-        <a href="{{ url_for('evento.editar_evento', evento_id=evento.id) }}" class="bg-yellow-500 text-white px-4 py-2 rounded">
+        <a href="{{ url_for('evento.editar_evento', evento_id=evento.id) }}" class="bg-yellow-500 text-white px-4 py-2 rounded focus:outline-none focus:ring-2 focus:ring-orange-500">
           Editar
         </a>
         <a href="{{ url_for('evento.excluir_evento', evento_id=evento.id) }}"
            onclick="return confirm('Deseja excluir este evento?')"
-           class="bg-red-600 text-white px-4 py-2 rounded">
+           class="bg-red-600 text-white px-4 py-2 rounded focus:outline-none focus:ring-2 focus:ring-orange-500">
           Excluir
         </a>
       {% endif %}
@@ -50,19 +50,19 @@
       <div class="flex gap-3">
         <a href="https://api.whatsapp.com/send?text={{ share_text }}"
            target="_blank"
-           class="bg-green-500 text-white px-4 py-2 rounded">
+           class="bg-green-500 text-white px-4 py-2 rounded focus:outline-none focus:ring-2 focus:ring-orange-500">
           WhatsApp
         </a>
 
         <a href="https://www.facebook.com/sharer/sharer.php?u={{ share_url }}"
            target="_blank"
-           class="bg-blue-600 text-white px-4 py-2 rounded">
+           class="bg-blue-600 text-white px-4 py-2 rounded focus:outline-none focus:ring-2 focus:ring-orange-500">
           Facebook
         </a>
 
         <a href="https://twitter.com/intent/tweet?text={{ evento.titulo }}&url={{ share_url }}"
            target="_blank"
-           class="bg-black text-white px-4 py-2 rounded">
+           class="bg-black text-white px-4 py-2 rounded focus:outline-none focus:ring-2 focus:ring-orange-500">
           X (Twitter)
         </a>
       </div>
